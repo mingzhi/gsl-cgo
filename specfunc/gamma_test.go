@@ -426,3 +426,154 @@ func TestFact(t *testing.T) {
 	}
 
 }
+
+func TestLnFact(t *testing.T) {
+	var (
+		n uint32
+		e float64
+		r float64
+		d float64
+	)
+	n, e = 0, 0.0
+	r, d = LnFact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnFact: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, e = 1, 0.0
+	r, d = LnFact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnFact: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, e = 7, 8.525161361065414300
+	r, d = LnFact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnFact: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, e = 33, 85.05446701758151741
+	r, d = LnFact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnFact: result %.5f, expected %.5f\n", r, e)
+	}
+
+}
+
+func TestLnDoubleFact(t *testing.T) {
+	var (
+		n uint32
+		e float64
+		r float64
+		d float64
+	)
+	n, e = 0, 0.0
+	r, d = LnDoubleFact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnDoubleFact: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, e = 7, 4.653960350157523371
+	r, d = LnDoubleFact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnDoubleFact: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, e = 33, 43.292252022541719660
+	r, d = LnDoubleFact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnDoubleFact: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, e = 34, 45.288575519655959140
+	r, d = LnDoubleFact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnDoubleFact: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, e = 1034, 3075.6383796271197707
+	r, d = LnDoubleFact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnDoubleFact: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, e = 1035, 3078.8839081731809169
+	r, d = LnDoubleFact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnDoubleFact: result %.5f, expected %.5f\n", r, e)
+	}
+
+}
+
+func TestLnChoose(t *testing.T) {
+	var (
+		n, m    uint32
+		r, e, d float64
+	)
+	n, m, e = 7, 3, 3.555348061489413680
+	r, d = LnChoose(n, m), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnChoose: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, m, e = 5, 2, 2.302585092994045684
+	r, d = LnChoose(n, m), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("LnChoose: result %.5f, expected %.5f\n", r, e)
+	}
+}
+
+func TestChoose(t *testing.T) {
+	var (
+		n, m    uint32
+		r, e, d float64
+	)
+
+	n, m, e = 7, 3, 35
+	r, d = Choose(n, m), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Choose: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, m, e = 7, 4, 35
+	r, d = Choose(n, m), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Choose: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, m, e = 5, 2, 10
+	r, d = Choose(n, m), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Choose: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, m, e = 5, 3, 10
+	r, d = Choose(n, m), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Choose: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, m, e = 500, 495, 255244687600.0
+	r, d = Choose(n, m), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Choose: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, m, e = 500, 5, 255244687600.0
+	r, d = Choose(n, m), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Choose: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, m, e = 500, 200, 5.054949849935532221e+144
+	r, d = Choose(n, m), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Choose: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, m, e = 500, 300, 5.054949849935532221e+144
+	r, d = Choose(n, m), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Choose: result %.5f, expected %.5f\n", r, e)
+	}
+}
