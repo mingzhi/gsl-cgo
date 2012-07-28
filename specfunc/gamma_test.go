@@ -3,7 +3,7 @@ package specfunc
 import "testing"
 import "bitbucket.org/mingzhi/goutils/assert"
 
-func TestLngamma(t *testing.T) {
+func TestLnGamma(t *testing.T) {
 	var (
 		x float64
 		r float64
@@ -13,56 +13,56 @@ func TestLngamma(t *testing.T) {
 
 	// case 1
 	x = -0.1
-	r = Lngamma(x)
+	r = LnGamma(x)
 	e = 2.368961332728788655
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Lngamma: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("LnGamma: result %.5f, expected %.5f\n", r, e)
 	}
 
 	// case 2
 	x = -1.0 / 256.0
-	r = Lngamma(x)
+	r = LnGamma(x)
 	e = 5.547444766967471595
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Lngamma: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("LnGamma: result %.5f, expected %.5f\n", r, e)
 	}
 
 	// case 3
 	x = 1.0e-08
-	r = Lngamma(x)
+	r = LnGamma(x)
 	e = 18.420680738180208905
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Lngamma: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("LnGamma: result %.5f, expected %.5f\n", r, e)
 	}
 
 	// case 4
 	x = 0.1
-	r = Lngamma(x)
+	r = LnGamma(x)
 	e = 2.252712651734205
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Lngamma: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("LnGamma: result %.5f, expected %.5f\n", r, e)
 	}
 
 	// case 5
 	x = 100.0
-	r = Lngamma(x)
+	r = LnGamma(x)
 	e = 359.1342053695753
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Lngamma: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("LnGamma: result %.5f, expected %.5f\n", r, e)
 	}
 
 	// case 6
 	x = -100 - 1.0/65536.0
-	r = Lngamma(x)
+	r = LnGamma(x)
 	e = -352.6490910117097874
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Lngamma: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("LnGamma: result %.5f, expected %.5f\n", r, e)
 	}
 }
 
@@ -172,71 +172,257 @@ func TestGammaStar(t *testing.T) {
 		d float64
 	)
 	x, e = 1.0e-08, 3989.423555759890865
-	r = Gammastar(x)
+	r = GammaStar(x)
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("GammaStar: result %.5f, expected %.5f\n", r, e)
 	}
 
 	x, e = 1.0e-05, 126.17168469882690233
-	r = Gammastar(x)
+	r = GammaStar(x)
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("GammaStar: result %.5f, expected %.5f\n", r, e)
 	}
 
 	x, e = 0.001, 12.708492464364073506
-	r = Gammastar(x)
+	r = GammaStar(x)
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("GammaStar: result %.5f, expected %.5f\n", r, e)
 	}
 	x, e = 1.5, 1.0563442442685598666
-	r = Gammastar(x)
+	r = GammaStar(x)
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("GammaStar: result %.5f, expected %.5f\n", r, e)
 	}
 
 	x, e = 3.0, 1.0280645179187893045
-	r = Gammastar(x)
+	r = GammaStar(x)
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("GammaStar: result %.5f, expected %.5f\n", r, e)
 	}
 
 	x, e = 9.0, 1.0092984264218189715
-	r = Gammastar(x)
+	r = GammaStar(x)
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("GammaStar: result %.5f, expected %.5f\n", r, e)
 	}
 
 	x, e = 11.0, 1.0076024283104962850
-	r = Gammastar(x)
+	r = GammaStar(x)
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("GammaStar: result %.5f, expected %.5f\n", r, e)
 	}
 
 	x, e = 100.0, 1.0008336778720121418
-	r = Gammastar(x)
+	r = GammaStar(x)
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("GammaStar: result %.5f, expected %.5f\n", r, e)
 	}
 
 	x, e = 1.0e+05, 1.0000008333336805529
-	r = Gammastar(x)
+	r = GammaStar(x)
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("GammaStar: result %.5f, expected %.5f\n", r, e)
 	}
 
 	x, e = 1.0e+20, 1.0
-	r = Gammastar(x)
+	r = GammaStar(x)
 	d = 1e-6
 	if !assert.EqualFloat64(r, e, d, 1) {
-		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+		t.Errorf("GammaStar: result %.5f, expected %.5f\n", r, e)
 	}
+}
+
+func TestGammaInv(t *testing.T) {
+	var (
+		x float64
+		e float64
+		r float64
+		d float64
+	)
+	x, e = 1.0, 1.0
+	r, d = GammaInv(x), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 2.0, 1.0
+	r, d = GammaInv(x), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 3.0, 0.5
+	r, d = GammaInv(x), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 4.0, 1.0/6.0
+	r, d = GammaInv(x), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 10.0, 1.0/362880.0
+	r, d = GammaInv(x), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 100.0, 1.0715102881254669232e-156
+	r, d = GammaInv(x), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+	}
+	/*
+		x, e = 0.0, 0.0
+		r, d = GammaInv(x), 1e-6
+		if !assert.EqualFloat64(r, e, d, 1) {
+			t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+		}
+
+
+		x, e = -1.0, 0.0
+		r, d = GammaInv(x), 1e-6
+		if !assert.EqualFloat64(r, e, d, 1) {
+			t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+		}
+
+
+		x, e = -2.0, 0.0
+		r, d = GammaInv(x), 1e-6
+		if !assert.EqualFloat64(r, e, d, 1) {
+			t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+		}
+
+		x, e = -3.0, 0.0
+		r, d = GammaInv(x), 1e-6
+		if !assert.EqualFloat64(r, e, d, 1) {
+			t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+		}
+
+		x, e = -4.0, 0.0
+		r, d = GammaInv(x), 1e-6
+		if !assert.EqualFloat64(r, e, d, 1) {
+			t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+		}
+
+		x, e = -10.5, -1.0/2.640121820547716316e-07
+		r, d = GammaInv(x), 1e-6
+		if !assert.EqualFloat64(r, e, d, 1) {
+			t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+		}
+
+		x, e = -11.25, 1.0/6.027393816261931672e-08
+		r, d = GammaInv(x), 1e-6
+		if !assert.EqualFloat64(r, e, d, 1) {
+			t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+		}
+
+		x, e = -1.0+1.0/65536.0, -1.0/65536.42280587818970
+		r, d = GammaInv(x), 1e-6
+		if !assert.EqualFloat64(r, e, d, 1) {
+			t.Errorf("GammaInv: result %.5f, expected %.5f\n", r, e)
+		}
+	*/
+}
+
+func TestTaylorCoeff(t *testing.T) {
+	var (
+		x float64
+		n int
+		e float64
+		d float64
+		r float64
+	)
+	n, x, e = 10, 1.0/1048576.0, 1.7148961854776073928e-67
+	r = TaylorCoeff(n, x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("TaylorCoeff: result %.5f, expected %.5f\n", r, e)
+	}
+	n, x, e = 10, 1.0/1024.0, 2.1738891788497900281e-37
+	r = TaylorCoeff(n, x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("TaylorCoeff: result %.5f, expected %.5f\n", r, e)
+	}
+	n, x, e = 10, 1.0, 2.7557319223985890653e-07
+	r = TaylorCoeff(n, x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("TaylorCoeff: result %.5f, expected %.5f\n", r, e)
+	}
+	n, x, e = 10, 5.0, 2.6911444554673721340
+	r = TaylorCoeff(n, x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("TaylorCoeff: result %.5f, expected %.5f\n", r, e)
+	}
+	n, x, e = 10, 500.0, 2.6911444554673721340e+20
+	r = TaylorCoeff(n, x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("TaylorCoeff: result %.5f, expected %.5f\n", r, e)
+	}
+	n, x, e = 100, 100.0, 1.0715102881254669232e+42
+	r = TaylorCoeff(n, x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("TaylorCoeff: result %.5f, expected %.5f\n", r, e)
+	}
+	n, x, e = 1000, 200.0, 2.6628790558154746898e-267
+	r = TaylorCoeff(n, x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("TaylorCoeff: result %.5f, expected %.5f\n", r, e)
+	}
+	n, x, e = 1000, 500.0, 2.3193170139740855074e+131
+	r = TaylorCoeff(n, x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("TaylorCoeff: result %.5f, expected %.5f\n", r, e)
+	}
+}
+
+func TestFact(t *testing.T) {
+	var (
+		n uint32
+		e float64
+		r float64
+		d float64
+	)
+	n, e = 0, 1.0
+	r, d = Fact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Fact: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, e = 1, 1.0
+	r, d = Fact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Fact: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, e = 7, 5040.0
+	r, d = Fact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Fact: result %.5f, expected %.5f\n", r, e)
+	}
+
+	n, e = 33, 8.683317618811886496e+36
+	r, d = Fact(n), 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Fact: result %.5f, expected %.5f\n", r, e)
+	}
+
 }
