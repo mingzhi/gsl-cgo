@@ -163,3 +163,80 @@ func TestGamma(t *testing.T) {
 	}
 
 }
+
+func TestGammaStar(t *testing.T) {
+	var (
+		x float64
+		e float64
+		r float64
+		d float64
+	)
+	x, e = 1.0e-08, 3989.423555759890865
+	r = Gammastar(x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 1.0e-05, 126.17168469882690233
+	r = Gammastar(x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 0.001, 12.708492464364073506
+	r = Gammastar(x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+	}
+	x, e = 1.5, 1.0563442442685598666
+	r = Gammastar(x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 3.0, 1.0280645179187893045
+	r = Gammastar(x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 9.0, 1.0092984264218189715
+	r = Gammastar(x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 11.0, 1.0076024283104962850
+	r = Gammastar(x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 100.0, 1.0008336778720121418
+	r = Gammastar(x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 1.0e+05, 1.0000008333336805529
+	r = Gammastar(x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+	}
+
+	x, e = 1.0e+20, 1.0
+	r = Gammastar(x)
+	d = 1e-6
+	if !assert.EqualFloat64(r, e, d, 1) {
+		t.Errorf("Gammastar: result %.5f, expected %.5f\n", r, e)
+	}
+}
