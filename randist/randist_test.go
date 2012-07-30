@@ -45,6 +45,23 @@ func TestExponential(t *testing.T) {
 	}
 }
 
+func TestPoisson(t *testing.T) {
+	var lambda float64
+	var e *Exponential
+
+	// [TODO] how to test FreeRandomGenerator()?
+
+	lambda = 0.5
+	e = NewExponential(lambda, RAND48)
+	defer e.FreeRandomGenerator()
+	ition := integration{cd: e, funcT: "pdf"}
+	name := "ExponentialPdf"
+	err := testPdf(ition, name)
+	if err != nil {
+		t.Errorf("%v\n", err)
+	}
+}
+
 /*
 func TestGamma(t *testing.T) {
 	seed := time.Now().UnixNano()

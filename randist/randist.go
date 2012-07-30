@@ -33,6 +33,14 @@ type ContinuousDistribution interface {
 	SetRandomGenerator(int)
 }
 
+type DiscreteDistribution interface {
+	Pdf(uint32) float64
+	Cdf(uint32) float64
+	RandomUint32() uint32
+	FreeRandomGenerator()
+	SetRandomGenerator(int)
+}
+
 const (
 	BOROSH13 = iota
 	CMRG
