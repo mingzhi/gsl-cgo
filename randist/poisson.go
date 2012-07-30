@@ -19,54 +19,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  */
-package integration
+package randist
 
 /*
 #cgo pkg-config: gsl
-#include "integration.h"
+#include <gsl/gsl_randist.h>
+#include <gsl/gsl_rng.h>
 */
 import "C"
-import "unsafe"
 
-type QkFunction func(F, float64, float64) (float64, float64, float64, float64)
-
-func Qk15(f F, a, b float64) (float64, float64, float64, float64) {
-	key := GSL_INTEG_GAUSS15
-	return Qk(f, a, b, key)
+type Poisson struct {
+	Lambda          float64
+	randomGenerator *C.gsl_rng
 }
 
-func Qk21(f F, a, b float64) (float64, float64, float64, float64) {
-	key := GSL_INTEG_GAUSS21
-	return Qk(f, a, b, key)
-}
-
-func Qk31(f F, a, b float64) (float64, float64, float64, float64) {
-	key := GSL_INTEG_GAUSS31
-	return Qk(f, a, b, key)
-}
-
-func Qk41(f F, a, b float64) (float64, float64, float64, float64) {
-	key := GSL_INTEG_GAUSS41
-	return Qk(f, a, b, key)
-}
-
-func Qk51(f F, a, b float64) (float64, float64, float64, float64) {
-	key := GSL_INTEG_GAUSS51
-	return Qk(f, a, b, key)
-}
-
-func Qk61(f F, a, b float64) (float64, float64, float64, float64) {
-	key := GSL_INTEG_GAUSS61
-	return Qk(f, a, b, key)
-}
-
-func Qk(f F, a, b float64, key int) (result, abserr, resabs, resasc float64) {
-	wf := C.wrapper_function(unsafe.Pointer(&f))
-
-	r := C.qk(wf, C.int(key), C.double(a), C.double(b))
-	result = float64(r.result)
-	abserr = float64(r.abserr)
-	resabs = float64(r.resabs)
-	resasc = float64(r.resasc)
+func NewPoisson(lambda float64, rng int) (poisson *Poisson) {
+	rg := newRandomGenerator(rng)
+	poisson = &Poisson{Lambda: lambda, randomGenerator: rg}
 	return
+}
+
+func (psn *Poisson) FreeRandomGenerator() {
+	freeRandomGenerator(psn.randomGenerator)
+}
+
+func (psn *Poisson) SetRandomGenerator(i int) {
+	// free the previous generator first
+	psn.FreeRandomGenerator()
+	rg := newRandomGenerator(i)
+	psn.randomGenerator = rg
 }
