@@ -23,7 +23,8 @@ package randist
 
 import (
 	"fmt"
-	"github.com/mingzhi/gsl/integra"
+	//"github.com/mingzhi/gsl/integra"
+	"bitbucket.org/mingzhi/gsl/integration"
 	"math"
 	"testing"
 )
@@ -37,7 +38,7 @@ func TestExponential(t *testing.T) {
 	lambda = 0.5
 	e = NewExponential(lambda, RAND48)
 	defer e.FreeRandomGenerator()
-	ition := integration{cd: e, funcT: "pdf"}
+	ition := continuousIntegration{cd: e, funcT: "pdf"}
 	name := "ExponentialPdf"
 	err := testPdf(ition, name)
 	if err != nil {
@@ -81,12 +82,12 @@ const (
 	BINS = 100
 )
 
-type integration struct {
+type continuousIntegration struct {
 	cd    ContinuousDistribution
 	funcT string
 }
 
-func (i integration) Evaluate(x float64) (p float64) {
+func (i continuousIntegration) Evaluate(x float64) (p float64) {
 	switch i.funcT {
 	case "cdf":
 		p = i.cd.Cdf(x)
@@ -98,7 +99,7 @@ func (i integration) Evaluate(x float64) (p float64) {
 	return
 }
 
-func (i integration) RandFloat() (x float64) {
+func (i continuousIntegration) RandFloat() (x float64) {
 	return i.cd.RandomFloat64()
 }
 
@@ -130,14 +131,14 @@ func (e TestError) Error() string {
 	return e.message
 }
 
-func integrate(pdf integra.Function, a, b float64) float64 {
+func integrate(f integration.F, a, b float64) float64 {
 	n := 1000
-	w, _ := integra.NewWorkspace(n)
-	result, _, _ := integra.Qag(pdf, a, b, 1e-16, 1e-4, n, w, integra.Qk61)
+	result, _, _ := integration.Qags(f, a, b, 1e-16, 1e-4, n)
+	//result, _, _ := integra.Qag(pdf, a, b, 1e-16, 1e-4, n, w, integra.Qk61)
 	return result
 }
 
-func testPdf(rd integration, name string) (err error) {
+func testPdf(rd continuousIntegration, name string) (err error) {
 	count := make([]float64, BINS)
 	edge := make([]float64, BINS)
 	p := make([]float64, BINS)
