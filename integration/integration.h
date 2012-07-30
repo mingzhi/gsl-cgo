@@ -16,3 +16,15 @@ gsl_function wrapper_function(void * p);
 my_result qng(const gsl_function f, double a, double b, double epsabs, double epsrel);
 
 my_result qk(const gsl_function f, int rule, double a, double b);
+
+//my_result qcheb(const gsl_function  f, double a, double b);
+
+my_result qag(const gsl_function f, 
+	double a, double b, 
+	double epsabs, double epsrel, 
+	size_t limit, int key);
+
+my_result qags(const gsl_function f, 
+	double a, double b, 
+	double epsabs, double epsrel, 
+	size_t limit);

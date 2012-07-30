@@ -35,22 +35,22 @@ qk(const gsl_function f, int rule, double a, double b)
 
 	double result = 0, abserr = 0, resabs = 0, resasc = 0;
 	switch (rule) {
-		case 15:
+		case GSL_INTEG_GAUSS15:
 		gsl_integration_qk15(&f, a, b, &result, &abserr, &resabs, &resasc);
 		break;
-		case 21:
+		case GSL_INTEG_GAUSS21:
 		gsl_integration_qk21(&f, a, b, &result, &abserr, &resabs, &resasc);
 		break;
-		case 31:
+		case GSL_INTEG_GAUSS31:
 		gsl_integration_qk31(&f, a, b, &result, &abserr, &resabs, &resasc);
 		break;
-		case 41:
+		case GSL_INTEG_GAUSS41:
 		gsl_integration_qk41(&f, a, b, &result, &abserr, &resabs, &resasc);
 		break;
-		case 51:
+		case GSL_INTEG_GAUSS51:
 		gsl_integration_qk51(&f, a, b, &result, &abserr, &resabs, &resasc);
 		break;
-		case 61:
+		case GSL_INTEG_GAUSS61:
 		gsl_integration_qk61(&f, a, b, &result, &abserr, &resabs, &resasc);
 		break;
 		default:
@@ -64,5 +64,49 @@ qk(const gsl_function f, int rule, double a, double b)
 	r.resasc = resasc;
 	r.status = GSL_SUCCESS;
 
+	return r;
+}
+
+my_result qag(const gsl_function f, 
+	double a, double b, 
+	double epsabs, double epsrel, 
+	size_t limit, int key)
+{
+	my_result r;
+
+	int status;
+	double result = 0, abserr = 0;
+	gsl_integration_workspace * w = gsl_integration_workspace_alloc(limit) ;
+	status = gsl_integration_qag (&f, a, b, 
+								  epsabs, epsrel, w->limit,
+                                  key, w,
+                                  &result, &abserr) ;
+	r.result = result;
+	r.abserr = abserr;
+	r.status = status;
+
+	gsl_integration_workspace_free(w);
+	return r;
+}
+
+my_result qags(const gsl_function f, 
+	double a, double b, 
+	double epsabs, double epsrel, 
+	size_t limit)
+{
+	my_result r;
+
+	int status;
+	double result = 0, abserr = 0;
+	gsl_integration_workspace * w = gsl_integration_workspace_alloc(limit) ;
+	status = gsl_integration_qags (&f, a, b, 
+								  epsabs, epsrel, w->limit,
+                                  w,
+                                  &result, &abserr) ;
+	r.result = result;
+	r.abserr = abserr;
+	r.status = status;
+
+	gsl_integration_workspace_free(w);
 	return r;
 }
