@@ -50,26 +50,26 @@ func (psn *Poisson) SetRandomGenerator(i int) {
 	psn.randomGenerator = rg
 }
 
-func (psn *Poisson) Pdf(k uint32) float64 {
-	return poissonPdf(k, psn.Lambda)
+func (psn *Poisson) Pdf(k int) float64 {
+	return PoissonPdf(k, psn.Lambda)
 }
 
-func (psn *Poisson) Cdf(k uint32) float64 {
+func (psn *Poisson) Cdf(k int) float64 {
 	panic("Have not implemented this function: Poisson.Cdf")
 	return 0
 }
 
-func (psn *Poisson) RandomUint32() uint32 {
-	return poissonRandomUInt32(psn.randomGenerator, psn.Lambda)
+func (psn *Poisson) RandomInt() int {
+	return PoissonRandomInt(psn.randomGenerator, psn.Lambda)
 }
 
-func poissonPdf(k uint32, lambda float64) float64 {
+func PoissonPdf(k int, lambda float64) float64 {
 	if k < 0 {
 		return 0
 	}
 	return float64(C.gsl_ran_poisson_pdf(C.uint(k), C.double(lambda)))
 }
 
-func poissonRandomUInt32(rng *C.gsl_rng, lambda float64) uint32 {
-	return uint32(C.gsl_ran_poisson(rng, C.double(lambda)))
+func PoissonRandomInt(rng *C.gsl_rng, lambda float64) int {
+	return int(C.gsl_ran_poisson(rng, C.double(lambda)))
 }

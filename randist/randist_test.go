@@ -47,16 +47,16 @@ func TestExponential(t *testing.T) {
 
 func TestPoisson(t *testing.T) {
 	var lambda float64
-	var e *Exponential
+	var psn *Poisson
 
 	// [TODO] how to test FreeRandomGenerator()?
 
 	lambda = 0.5
-	e = NewExponential(lambda, RAND48)
-	defer e.FreeRandomGenerator()
-	ition := integration{cd: e, funcT: "pdf"}
-	name := "ExponentialPdf"
-	err := testPdf(ition, name)
+	psn = NewPoisson(lambda, RAND48)
+	defer psn.FreeRandomGenerator()
+	ition := discreteIntegration{dd: psn, funcT: "pdf"}
+	name := "PoissonPdf"
+	err := testDiscretePDF(ition, name)
 	if err != nil {
 		t.Errorf("%v\n", err)
 	}
@@ -100,6 +100,26 @@ func (i integration) Evaluate(x float64) (p float64) {
 
 func (i integration) RandFloat() (x float64) {
 	return i.cd.RandomFloat64()
+}
+
+type discreteIntegration struct {
+	dd    DiscreteDistribution
+	funcT string
+}
+
+func (di discreteIntegration) Evaluate(x float64) (p float64) {
+	switch di.funcT {
+	case "cdf":
+		p = float64(di.dd.Cdf(int(x)))
+		break
+	default:
+		p = float64(di.dd.Pdf(int(x)))
+	}
+	return
+}
+
+func (di discreteIntegration) RandInt() (x int) {
+	return di.dd.RandomInt()
 }
 
 type TestError struct {
@@ -217,5 +237,47 @@ trial:
 		err = TestError{message: fmt.Sprintf("%s, sampling against pdf over range [%g,%g) ",
 			name, a, b)}
 	}
+	return
+}
+
+func testDiscretePDF(rd discreteIntegration, name string) (err error) {
+	count := make([]float64, BINS)
+	p := make([]float64, BINS)
+
+	var exception bool
+	var exception_i bool
+
+	for i := 0; i < N; i++ {
+		r := rd.RandInt()
+		if r >= 0 && r < BINS {
+			count[r]++
+		}
+	}
+
+	for i := 0; i < BINS; i++ {
+		p[i] = rd.dd.Pdf(i)
+	}
+
+	for i := 0; i < BINS; i++ {
+		d := math.Abs(count[i] - float64(N)*p[i])
+		if p[i] != 0 {
+			s := d / math.Sqrt(float64(N)*p[i])
+			exception_i = (s > 5) && (d > 1)
+		} else {
+			exception_i = (count[i] != 0)
+		}
+		exception = (exception || exception_i)
+		if exception_i {
+			err = TestError{message: fmt.Sprintf("%s i=%d (%g observed vs %g expected)",
+				name, i, count[i]/float64(N), p[i])}
+			return
+		}
+	}
+
+	if exception {
+		err = TestError{message: fmt.Sprintf("%s, sampling against pdf over range [%d,%d) ",
+			name, 0, BINS)}
+	}
+
 	return
 }

@@ -34,9 +34,9 @@ type ContinuousDistribution interface {
 }
 
 type DiscreteDistribution interface {
-	Pdf(uint32) float64
-	Cdf(uint32) float64
-	RandomUint32() uint32
+	Pdf(int) float64
+	Cdf(int) float64
+	RandomInt() int
 	FreeRandomGenerator()
 	SetRandomGenerator(int)
 }
