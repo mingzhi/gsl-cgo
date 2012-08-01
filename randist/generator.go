@@ -28,39 +28,16 @@ package randist
 */
 import "C"
 
-//Exponential distribution
-// p(x) dx = exp(-x/lambda) dx/lambda
-// for x = 0 ... +infty
-type Exponential struct {
-	Lambda          float64
-	RandomGenerator *RNG
+// Random Number Generator
+type RNG struct {
+	g *C.gsl_rng
 }
 
-func NewExponential(lambda float64, rng *RNG) (e *Exponential) {
-	e = &Exponential{Lambda: lambda, RandomGenerator: rng}
-	return
+func NewRNG(i int) *RNG {
+	return &RNG{g: newRandomGenerator(i)}
 }
 
-func (e *Exponential) Pdf(x float64) (p float64) {
-	p = ExponentialPdf(x, e.Lambda)
-	return
-}
-
-func (e *Exponential) Cdf(x float64) (p float64) {
-	panic("Have not implement this function: Exponential.Cdf(float64)")
-	return
-}
-
-func (e *Exponential) RandomFloat64() (x float64) {
-	x = ExponentialRandomFloat64(e.RandomGenerator, e.Lambda)
-	return
-}
-
-func ExponentialRandomFloat64(rd *RNG, lambda float64) (x float64) {
-	x = float64(C.gsl_ran_exponential(rd.g, C.double(lambda)))
-	return x
-}
-
-func ExponentialPdf(x, lambda float64) float64 {
-	return float64(C.gsl_ran_exponential_pdf(C.double(x), C.double(lambda)))
+// Free memory allocated to C.gsl_rng
+func (r *RNG) Free() {
+	freeRandomGenerator(r.g)
 }

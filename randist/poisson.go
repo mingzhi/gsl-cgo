@@ -30,24 +30,12 @@ import "C"
 
 type Poisson struct {
 	Lambda          float64
-	randomGenerator *C.gsl_rng
+	RandomGenerator *RNG
 }
 
-func NewPoisson(lambda float64, rng int) (psn *Poisson) {
-	rg := newRandomGenerator(rng)
-	psn = &Poisson{Lambda: lambda, randomGenerator: rg}
+func NewPoisson(lambda float64, rng *RNG) (psn *Poisson) {
+	psn = &Poisson{Lambda: lambda, RandomGenerator: rng}
 	return
-}
-
-func (psn *Poisson) FreeRandomGenerator() {
-	freeRandomGenerator(psn.randomGenerator)
-}
-
-func (psn *Poisson) SetRandomGenerator(i int) {
-	// free the previous generator first
-	psn.FreeRandomGenerator()
-	rg := newRandomGenerator(i)
-	psn.randomGenerator = rg
 }
 
 func (psn *Poisson) Pdf(k int) float64 {
@@ -60,7 +48,7 @@ func (psn *Poisson) Cdf(k int) float64 {
 }
 
 func (psn *Poisson) RandomInt() int {
-	return PoissonRandomInt(psn.randomGenerator, psn.Lambda)
+	return PoissonRandomInt(psn.RandomGenerator, psn.Lambda)
 }
 
 func PoissonPdf(k int, lambda float64) float64 {
@@ -70,6 +58,6 @@ func PoissonPdf(k int, lambda float64) float64 {
 	return float64(C.gsl_ran_poisson_pdf(C.uint(k), C.double(lambda)))
 }
 
-func PoissonRandomInt(rng *C.gsl_rng, lambda float64) int {
-	return int(C.gsl_ran_poisson(rng, C.double(lambda)))
+func PoissonRandomInt(rng *RNG, lambda float64) int {
+	return int(C.gsl_ran_poisson(rng.g, C.double(lambda)))
 }

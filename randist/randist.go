@@ -29,16 +29,12 @@ type ContinuousDistribution interface {
 	Pdf(float64) float64
 	Cdf(float64) float64
 	RandomFloat64() float64
-	FreeRandomGenerator()
-	SetRandomGenerator(int)
 }
 
 type DiscreteDistribution interface {
 	Pdf(int) float64
 	Cdf(int) float64
 	RandomInt() int
-	FreeRandomGenerator()
-	SetRandomGenerator(int)
 }
 
 const (

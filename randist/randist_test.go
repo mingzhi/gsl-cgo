@@ -33,11 +33,10 @@ func TestExponential(t *testing.T) {
 	var lambda float64
 	var e *Exponential
 
-	// [TODO] how to test FreeRandomGenerator()?
-
 	lambda = 0.5
-	e = NewExponential(lambda, RAND48)
-	defer e.FreeRandomGenerator()
+	rng := NewRNG(RAND48)
+	defer rng.Free()
+	e = NewExponential(lambda, rng)
 	ition := continuousIntegration{cd: e, funcT: "pdf"}
 	name := "ExponentialPdf"
 	err := testPdf(ition, name)
@@ -50,11 +49,10 @@ func TestPoisson(t *testing.T) {
 	var lambda float64
 	var psn *Poisson
 
-	// [TODO] how to test FreeRandomGenerator()?
-
 	lambda = 0.5
-	psn = NewPoisson(lambda, RAND48)
-	defer psn.FreeRandomGenerator()
+	rng := NewRNG(RAND48)
+	defer rng.Free()
+	psn = NewPoisson(lambda, rng)
 	ition := discreteIntegration{dd: psn, funcT: "pdf"}
 	name := "PoissonPdf"
 	err := testDiscretePDF(ition, name)
