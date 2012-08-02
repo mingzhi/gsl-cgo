@@ -50,7 +50,9 @@ func TestPoisson(t *testing.T) {
 	var psn *Poisson
 
 	lambda = 0.5
+	seed := 10000
 	rng := NewRNG(RAND48)
+	rng.SetSeed(seed)
 	defer rng.Free()
 	psn = NewPoisson(lambda, rng)
 	ition := discreteIntegration{dd: psn, funcT: "pdf"}
