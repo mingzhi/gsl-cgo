@@ -52,7 +52,7 @@ func UniformRandomPos(rng *RNG) float64 {
 }
 
 func UniformRandomInt(rng *RNG, n int) int {
-	return int(C.gsl_rng_uniform_int(rng.g, c.ulong(n)))
+	return int(C.gsl_rng_uniform_int(rng.g, C.ulong(n)))
 }
 
 func UniformGet(rng *RNG) int {
