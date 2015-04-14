@@ -27,10 +27,22 @@ package randist
 #include <gsl/gsl_rng.h>
 */
 import "C"
+import (
+	"sync"
+)
 
 // Random Number Generator
 type RNG struct {
-	g *C.gsl_rng
+	lk sync.Mutex
+	g  *C.gsl_rng
+}
+
+func (r *RNG) Lock() {
+	r.lk.Lock()
+}
+
+func (r *RNG) Unlock() {
+	r.lk.Unlock()
 }
 
 func NewRNG(i int) *RNG {

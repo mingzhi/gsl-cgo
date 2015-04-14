@@ -52,7 +52,10 @@ func (uni *Uniform) RandomInt(n int) int {
 }
 
 func (uni *Uniform) Intn(n int) int {
-	return UniformRandomInt(uni.RandomGenerator, n)
+	uni.RandomGenerator.Lock()
+	defer uni.RandomGenerator.Unlock()
+	d := UniformRandomInt(uni.RandomGenerator, n)
+	return d
 }
 
 func UniformRandomFloat64(rng *RNG) float64 {
